@@ -10,4 +10,3 @@ USER app
 ENV DATABASE_URL=sqlite:////data/lotwise.db
 EXPOSE 8000
 CMD ["uvicorn", "lotwise.api:app", "--host", "0.0.0.0", "--port", "8000"]
-

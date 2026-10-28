@@ -29,4 +29,3 @@ Explain why a position restriction can worsen model distance, why lot selection
 changes gains without changing shares sold, and why a solver success flag is not
 sufficient to release trades. These tradeoffs are stronger interview material
 than presenting the simulator as a production investment system.
-

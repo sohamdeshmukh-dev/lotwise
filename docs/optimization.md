@@ -44,4 +44,3 @@ reuses canonicalization by matrix shape, assigns fresh account parameters, and
 keeps each mutable solver instance behind a lock in the API. The independent
 replay does not inspect solver variables; it uses the emitted trades and original
 input snapshot. Rejected results carry no actionable trade list.
-

@@ -175,4 +175,3 @@ executes the database integration test. See [the test report](docs/validation.md
 - [SQLAlchemy transaction management](https://docs.sqlalchemy.org/en/20/orm/session_transaction.html)
 
 MIT licensed. Independent educational project; no affiliation with an investment manager.
-

@@ -48,4 +48,3 @@ TEST_DATABASE_URL='postgresql+psycopg://user:password@localhost/lotwise_test' \
 
 The GitHub Actions workflow provisions its own empty PostgreSQL 17 database and
 sets this variable automatically.
-

@@ -6,4 +6,3 @@ __pycache__
 *.db
 .env
 benchmarks/results/*.db
-
