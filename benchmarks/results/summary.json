@@ -1,0 +1,63 @@
+{
+  "seed": 42,
+  "account_count": 1000,
+  "securities_per_account": 20,
+  "tax_lots_per_account": 60,
+  "total_tax_lots": 60000,
+  "runs": [
+    {
+      "run": 1,
+      "seconds": 2.0690083330264315,
+      "accounts_per_second": 483.3233312971993,
+      "p50_proposal_ms": 2.0850630244240165,
+      "p95_proposal_ms": 2.4221183848567307
+    },
+    {
+      "run": 2,
+      "seconds": 1.9499182919971645,
+      "accounts_per_second": 512.8420016901171,
+      "p50_proposal_ms": 2.069624955765903,
+      "p95_proposal_ms": 2.293425297830254
+    },
+    {
+      "run": 3,
+      "seconds": 2.0709712910465896,
+      "accounts_per_second": 482.8652161057425,
+      "p50_proposal_ms": 2.110250061377883,
+      "p95_proposal_ms": 2.5420145189855248
+    }
+  ],
+  "median_batch_seconds": 2.0690083330264315,
+  "mean_initial_weight_rmse_bps": 206.97608274511347,
+  "mean_final_weight_rmse_bps": 93.61753545283239,
+  "mean_weight_rmse_reduction_pct": 54.76891135865184,
+  "fifo_positive_realized_gain_total": 50011532.23230529,
+  "optimized_positive_realized_gain_total": 10999339.472946169,
+  "positive_realized_gain_reduction_vs_fifo_pct": 78.0063937616351,
+  "validated_proposals_per_run": 1000,
+  "constraint_violations_all_runs": 0,
+  "infeasible_scenarios_detected": 50,
+  "infeasibility_check_seconds": 0.031996166915632784,
+  "total_trades": 30218,
+  "sqlite_persist_and_retrieve_seconds": 4.339732584077865,
+  "sqlite_proposals_round_tripped": 1000,
+  "environment": {
+    "python": "3.13.3",
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "processor": "arm64",
+    "packages": {
+      "cvxpy": "1.9.3",
+      "clarabel": "0.11.1",
+      "numpy": "2.5.4",
+      "sqlalchemy": "2.1.6"
+    }
+  },
+  "methodology": {
+    "data": "Seeded synthetic accounts and prices, not historical market returns",
+    "timing": "Sequential single-process solve + replay + FIFO counterfactual; includes cold first solve, excludes fixture generation and database I/O",
+    "fifo": "Identical security-level sell quantities, input-order FIFO lots; counterfactual may exceed gain budget",
+    "gain_metric": "Sum of positive realized lot gains, not tax savings or investment returns",
+    "drift": "Per-account cross-sectional weight RMSE vs model, using initial NAV; not return tracking error",
+    "scope": "60 tax lots and 20 securities per account; fractional shares; no wash-sale or cross-account model"
+  }
+}

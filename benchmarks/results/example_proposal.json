@@ -1,0 +1,203 @@
+{
+  "account_id": "SIM-42-00000",
+  "status": "optimal",
+  "method": "lotwise",
+  "trades": [
+    {
+      "symbol": "SIM001",
+      "side": "SELL",
+      "shares": 105.73029298934792,
+      "price": 218.18453198006105,
+      "lot_id": "0-1-2",
+      "realized_gain": -3460.3071737993387,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM002",
+      "side": "SELL",
+      "shares": 171.28899592656796,
+      "price": 181.90780653835688,
+      "lot_id": "0-2-2",
+      "realized_gain": -4673.820829973926,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM006",
+      "side": "SELL",
+      "shares": 84.51433951892912,
+      "price": 201.8644686873146,
+      "lot_id": "0-6-2",
+      "realized_gain": -2559.06633651719,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM007",
+      "side": "SELL",
+      "shares": 621.3241530794129,
+      "price": 53.82556735199782,
+      "lot_id": "0-7-2",
+      "realized_gain": -5016.468757349838,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM008",
+      "side": "SELL",
+      "shares": 37.147622728287,
+      "price": 126.33683602650261,
+      "lot_id": "0-8-2",
+      "realized_gain": -703.966968209696,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM012",
+      "side": "SELL",
+      "shares": 96.41290273023047,
+      "price": 210.12136298593674,
+      "lot_id": "0-12-2",
+      "realized_gain": -3038.7615796659834,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM013",
+      "side": "SELL",
+      "shares": 10.660389155913503,
+      "price": 124.76819473614951,
+      "lot_id": "0-13-2",
+      "realized_gain": -199.51162652522274,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM014",
+      "side": "SELL",
+      "shares": 236.74449111931213,
+      "price": 76.1287124015748,
+      "lot_id": "0-14-2",
+      "realized_gain": -2703.4579915618924,
+      "reason": "Rebalance overweight position; optimize sale at tax-lot level"
+    },
+    {
+      "symbol": "SIM000",
+      "side": "BUY",
+      "shares": 74.97215613953371,
+      "price": 123.74764894421178,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM003",
+      "side": "BUY",
+      "shares": 293.8269178926147,
+      "price": 46.189903274721146,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM004",
+      "side": "BUY",
+      "shares": 17.594319422391475,
+      "price": 244.5150291182701,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM005",
+      "side": "BUY",
+      "shares": 155.262925437657,
+      "price": 196.2564329478294,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM009",
+      "side": "BUY",
+      "shares": 77.57247755602529,
+      "price": 108.42955545233077,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM010",
+      "side": "BUY",
+      "shares": 86.12785478398703,
+      "price": 233.5221224909354,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM011",
+      "side": "BUY",
+      "shares": 64.08894404147027,
+      "price": 169.8696520181495,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM015",
+      "side": "BUY",
+      "shares": 4.7270296977668425,
+      "price": 149.78157707856283,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM016",
+      "side": "BUY",
+      "shares": 27.014501729655716,
+      "price": 39.35888262343945,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM017",
+      "side": "BUY",
+      "shares": 170.5202134606813,
+      "price": 211.21701369833096,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM018",
+      "side": "BUY",
+      "shares": 195.64206711681615,
+      "price": 167.12448980246458,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    },
+    {
+      "symbol": "SIM019",
+      "side": "BUY",
+      "shares": 145.52625584723623,
+      "price": 195.56974151920912,
+      "lot_id": null,
+      "realized_gain": 0.0,
+      "reason": "Move toward model allocation within account limits"
+    }
+  ],
+  "metrics": {
+    "nav": 1570516.4922563296,
+    "ending_cash": 15705.164741934605,
+    "transaction_cost": 172.50723561370648,
+    "realized_gain": -22355.36126360309,
+    "turnover": 0.10984108505977466,
+    "weight_rmse_bps": 7.040716606254358,
+    "initial_weight_rmse_bps": 137.20717388806776,
+    "gross_traded": 345014.47122741287,
+    "trade_count": 20.0,
+    "constraint_violation_count": 0.0,
+    "runtime_ms": 7.428874960169196
+  },
+  "exceptions": [],
+  "solver_status": "optimal",
+  "input_hash": "7afba265d33fcc3db3ee018b830a0d06adb53587fb428072407b94cb0d00a798"
+}

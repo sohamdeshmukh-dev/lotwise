@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: lotwise
+      POSTGRES_PASSWORD: local-demo-only
+      POSTGRES_DB: lotwise
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lotwise"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://lotwise:local-demo-only@db:5432/lotwise
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:
+

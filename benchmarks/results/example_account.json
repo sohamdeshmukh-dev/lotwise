@@ -1,0 +1,473 @@
+{
+  "account_id": "SIM-42-00000",
+  "cash": 62820.65969025321,
+  "securities": [
+    {
+      "symbol": "SIM000",
+      "price": 123.74764894421178,
+      "target_weight": 0.04112712971904062
+    },
+    {
+      "symbol": "SIM001",
+      "price": 218.18453198006105,
+      "target_weight": 0.04648979410783631
+    },
+    {
+      "symbol": "SIM002",
+      "price": 181.90780653835688,
+      "target_weight": 0.04442527268628096
+    },
+    {
+      "symbol": "SIM003",
+      "price": 46.189903274721146,
+      "target_weight": 0.052225772745056985
+    },
+    {
+      "symbol": "SIM004",
+      "price": 244.5150291182701,
+      "target_weight": 0.05297869650957268
+    },
+    {
+      "symbol": "SIM005",
+      "price": 196.2564329478294,
+      "target_weight": 0.04386905516776482
+    },
+    {
+      "symbol": "SIM006",
+      "price": 201.8644686873146,
+      "target_weight": 0.03984231389237505
+    },
+    {
+      "symbol": "SIM007",
+      "price": 53.82556735199782,
+      "target_weight": 0.06147506159970025
+    },
+    {
+      "symbol": "SIM008",
+      "price": 126.33683602650261,
+      "target_weight": 0.03959036666147352
+    },
+    {
+      "symbol": "SIM009",
+      "price": 108.42955545233077,
+      "target_weight": 0.055562727817140375
+    },
+    {
+      "symbol": "SIM010",
+      "price": 233.5221224909354,
+      "target_weight": 0.05428923789608654
+    },
+    {
+      "symbol": "SIM011",
+      "price": 169.8696520181495,
+      "target_weight": 0.05071296575090728
+    },
+    {
+      "symbol": "SIM012",
+      "price": 210.12136298593674,
+      "target_weight": 0.05056169199756379
+    },
+    {
+      "symbol": "SIM013",
+      "price": 124.76819473614951,
+      "target_weight": 0.050616753096467855
+    },
+    {
+      "symbol": "SIM014",
+      "price": 76.1287124015748,
+      "target_weight": 0.04888557123376335
+    },
+    {
+      "symbol": "SIM015",
+      "price": 149.78157707856283,
+      "target_weight": 0.05533245510438181
+    },
+    {
+      "symbol": "SIM016",
+      "price": 39.35888262343945,
+      "target_weight": 0.04476014733307252
+    },
+    {
+      "symbol": "SIM017",
+      "price": 211.21701369833096,
+      "target_weight": 0.041539521019852185
+    },
+    {
+      "symbol": "SIM018",
+      "price": 167.12448980246458,
+      "target_weight": 0.06627096305831401
+    },
+    {
+      "symbol": "SIM019",
+      "price": 195.56974151920912,
+      "target_weight": 0.05944450260334903
+    }
+  ],
+  "lots": [
+    {
+      "lot_id": "0-0-0",
+      "symbol": "SIM000",
+      "shares": 199.1964941753157,
+      "cost_basis_per_share": 80.43597181373765
+    },
+    {
+      "lot_id": "0-0-1",
+      "symbol": "SIM000",
+      "shares": 149.79961190536645,
+      "cost_basis_per_share": 111.3728840497906
+    },
+    {
+      "lot_id": "0-0-2",
+      "symbol": "SIM000",
+      "shares": 86.49388466961274,
+      "cost_basis_per_share": 142.30979628584353
+    },
+    {
+      "lot_id": "0-1-0",
+      "symbol": "SIM001",
+      "shares": 159.45598701285732,
+      "cost_basis_per_share": 141.8199457870397
+    },
+    {
+      "lot_id": "0-1-1",
+      "symbol": "SIM001",
+      "shares": 53.656347252221536,
+      "cost_basis_per_share": 196.36607878205496
+    },
+    {
+      "lot_id": "0-1-2",
+      "symbol": "SIM001",
+      "shares": 227.93868986607615,
+      "cost_basis_per_share": 250.91221177707018
+    },
+    {
+      "lot_id": "0-2-0",
+      "symbol": "SIM002",
+      "shares": 93.84809454273774,
+      "cost_basis_per_share": 118.24007424993198
+    },
+    {
+      "lot_id": "0-2-1",
+      "symbol": "SIM002",
+      "shares": 190.17638279686517,
+      "cost_basis_per_share": 163.7170258845212
+    },
+    {
+      "lot_id": "0-2-2",
+      "symbol": "SIM002",
+      "shares": 271.6319251572684,
+      "cost_basis_per_share": 209.1939775191104
+    },
+    {
+      "lot_id": "0-3-0",
+      "symbol": "SIM003",
+      "shares": 307.6299861250198,
+      "cost_basis_per_share": 30.023437128568744
+    },
+    {
+      "lot_id": "0-3-1",
+      "symbol": "SIM003",
+      "shares": 398.21684793198546,
+      "cost_basis_per_share": 41.570912947249035
+    },
+    {
+      "lot_id": "0-3-2",
+      "symbol": "SIM003",
+      "shares": 745.2766972885919,
+      "cost_basis_per_share": 53.11838876592932
+    },
+    {
+      "lot_id": "0-4-0",
+      "symbol": "SIM004",
+      "shares": 177.66488607275372,
+      "cost_basis_per_share": 158.93476892687556
+    },
+    {
+      "lot_id": "0-4-1",
+      "symbol": "SIM004",
+      "shares": 62.498603536511474,
+      "cost_basis_per_share": 220.0635262064431
+    },
+    {
+      "lot_id": "0-4-2",
+      "symbol": "SIM004",
+      "shares": 76.70658750070663,
+      "cost_basis_per_share": 281.1922834860106
+    },
+    {
+      "lot_id": "0-5-0",
+      "symbol": "SIM005",
+      "shares": 40.279576875140826,
+      "cost_basis_per_share": 127.56668141608912
+    },
+    {
+      "lot_id": "0-5-1",
+      "symbol": "SIM005",
+      "shares": 94.28501871878049,
+      "cost_basis_per_share": 176.63078965304646
+    },
+    {
+      "lot_id": "0-5-2",
+      "symbol": "SIM005",
+      "shares": 53.981487811283245,
+      "cost_basis_per_share": 225.6948978900038
+    },
+    {
+      "lot_id": "0-6-0",
+      "symbol": "SIM006",
+      "shares": 193.0933260188908,
+      "cost_basis_per_share": 131.2119046467545
+    },
+    {
+      "lot_id": "0-6-1",
+      "symbol": "SIM006",
+      "shares": 61.09880843699631,
+      "cost_basis_per_share": 181.67802181858315
+    },
+    {
+      "lot_id": "0-6-2",
+      "symbol": "SIM006",
+      "shares": 141.03473352337062,
+      "cost_basis_per_share": 232.14413899041176
+    },
+    {
+      "lot_id": "0-7-0",
+      "symbol": "SIM007",
+      "shares": 666.2138670326691,
+      "cost_basis_per_share": 34.98661877879859
+    },
+    {
+      "lot_id": "0-7-1",
+      "symbol": "SIM007",
+      "shares": 796.2539219052035,
+      "cost_basis_per_share": 48.44301061679804
+    },
+    {
+      "lot_id": "0-7-2",
+      "symbol": "SIM007",
+      "shares": 955.3336010462615,
+      "cost_basis_per_share": 61.89940245479749
+    },
+    {
+      "lot_id": "0-8-0",
+      "symbol": "SIM008",
+      "shares": 108.25820610806149,
+      "cost_basis_per_share": 82.1189434172267
+    },
+    {
+      "lot_id": "0-8-1",
+      "symbol": "SIM008",
+      "shares": 161.31756636829536,
+      "cost_basis_per_share": 113.70315242385234
+    },
+    {
+      "lot_id": "0-8-2",
+      "symbol": "SIM008",
+      "shares": 260.9048651686815,
+      "cost_basis_per_share": 145.287361430478
+    },
+    {
+      "lot_id": "0-9-0",
+      "symbol": "SIM009",
+      "shares": 332.4332778144827,
+      "cost_basis_per_share": 70.479211044015
+    },
+    {
+      "lot_id": "0-9-1",
+      "symbol": "SIM009",
+      "shares": 222.56568289630894,
+      "cost_basis_per_share": 97.58659990709769
+    },
+    {
+      "lot_id": "0-9-2",
+      "symbol": "SIM009",
+      "shares": 159.09311375126967,
+      "cost_basis_per_share": 124.69398877018038
+    },
+    {
+      "lot_id": "0-10-0",
+      "symbol": "SIM010",
+      "shares": 129.00748753493872,
+      "cost_basis_per_share": 151.78937961910802
+    },
+    {
+      "lot_id": "0-10-1",
+      "symbol": "SIM010",
+      "shares": 70.20737814736162,
+      "cost_basis_per_share": 210.16991024184188
+    },
+    {
+      "lot_id": "0-10-2",
+      "symbol": "SIM010",
+      "shares": 73.68021757726686,
+      "cost_basis_per_share": 268.5504408645757
+    },
+    {
+      "lot_id": "0-11-0",
+      "symbol": "SIM011",
+      "shares": 156.08134643143399,
+      "cost_basis_per_share": 110.41527381179718
+    },
+    {
+      "lot_id": "0-11-1",
+      "symbol": "SIM011",
+      "shares": 111.88130089342515,
+      "cost_basis_per_share": 152.88268681633457
+    },
+    {
+      "lot_id": "0-11-2",
+      "symbol": "SIM011",
+      "shares": 128.43798522241502,
+      "cost_basis_per_share": 195.35009982087192
+    },
+    {
+      "lot_id": "0-12-0",
+      "symbol": "SIM012",
+      "shares": 52.62629681383043,
+      "cost_basis_per_share": 136.5788859408589
+    },
+    {
+      "lot_id": "0-12-1",
+      "symbol": "SIM012",
+      "shares": 301.3278099374017,
+      "cost_basis_per_share": 189.10922668734307
+    },
+    {
+      "lot_id": "0-12-2",
+      "symbol": "SIM012",
+      "shares": 121.08178995543423,
+      "cost_basis_per_share": 241.63956743382724
+    },
+    {
+      "lot_id": "0-13-0",
+      "symbol": "SIM013",
+      "shares": 322.6550923897478,
+      "cost_basis_per_share": 81.09932657849718
+    },
+    {
+      "lot_id": "0-13-1",
+      "symbol": "SIM013",
+      "shares": 122.0930161468201,
+      "cost_basis_per_share": 112.29137526253456
+    },
+    {
+      "lot_id": "0-13-2",
+      "symbol": "SIM013",
+      "shares": 204.24205859526725,
+      "cost_basis_per_share": 143.48342394657192
+    },
+    {
+      "lot_id": "0-14-0",
+      "symbol": "SIM014",
+      "shares": 351.5117228881942,
+      "cost_basis_per_share": 49.48366306102362
+    },
+    {
+      "lot_id": "0-14-1",
+      "symbol": "SIM014",
+      "shares": 117.87123338053935,
+      "cost_basis_per_share": 68.51584116141733
+    },
+    {
+      "lot_id": "0-14-2",
+      "symbol": "SIM014",
+      "shares": 777.8134636357023,
+      "cost_basis_per_share": 87.54801926181102
+    },
+    {
+      "lot_id": "0-15-0",
+      "symbol": "SIM015",
+      "shares": 164.48487242339394,
+      "cost_basis_per_share": 97.35802510106585
+    },
+    {
+      "lot_id": "0-15-1",
+      "symbol": "SIM015",
+      "shares": 97.3882062487058,
+      "cost_basis_per_share": 134.80341937070656
+    },
+    {
+      "lot_id": "0-15-2",
+      "symbol": "SIM015",
+      "shares": 304.08548608576933,
+      "cost_basis_per_share": 172.24881364034724
+    },
+    {
+      "lot_id": "0-16-0",
+      "symbol": "SIM016",
+      "shares": 524.4782251849723,
+      "cost_basis_per_share": 25.583273705235644
+    },
+    {
+      "lot_id": "0-16-1",
+      "symbol": "SIM016",
+      "shares": 642.554900732085,
+      "cost_basis_per_share": 35.422994361095505
+    },
+    {
+      "lot_id": "0-16-2",
+      "symbol": "SIM016",
+      "shares": 555.8548096222589,
+      "cost_basis_per_share": 45.26271501695536
+    },
+    {
+      "lot_id": "0-17-0",
+      "symbol": "SIM017",
+      "shares": 19.652456785842762,
+      "cost_basis_per_share": 137.29105890391511
+    },
+    {
+      "lot_id": "0-17-1",
+      "symbol": "SIM017",
+      "shares": 56.707548015259924,
+      "cost_basis_per_share": 190.09531232849787
+    },
+    {
+      "lot_id": "0-17-2",
+      "symbol": "SIM017",
+      "shares": 55.25528099675646,
+      "cost_basis_per_share": 242.8995657530806
+    },
+    {
+      "lot_id": "0-18-0",
+      "symbol": "SIM018",
+      "shares": 174.0897323939233,
+      "cost_basis_per_share": 108.63091837160198
+    },
+    {
+      "lot_id": "0-18-1",
+      "symbol": "SIM018",
+      "shares": 106.06897632987014,
+      "cost_basis_per_share": 150.41204082221813
+    },
+    {
+      "lot_id": "0-18-2",
+      "symbol": "SIM018",
+      "shares": 138.4556722139682,
+      "cost_basis_per_share": 192.19316327283425
+    },
+    {
+      "lot_id": "0-19-0",
+      "symbol": "SIM019",
+      "shares": 85.39918683973022,
+      "cost_basis_per_share": 127.12033198748593
+    },
+    {
+      "lot_id": "0-19-1",
+      "symbol": "SIM019",
+      "shares": 143.6922973713053,
+      "cost_basis_per_share": 176.0127673672882
+    },
+    {
+      "lot_id": "0-19-2",
+      "symbol": "SIM019",
+      "shares": 95.47659073726514,
+      "cost_basis_per_share": 224.90520274709047
+    }
+  ],
+  "restricted_symbols": [],
+  "max_position_weight": 0.2,
+  "realized_gain_budget": 23948.16979595715,
+  "min_cash_weight": 0.01,
+  "transaction_cost_bps": 5.0
+}
