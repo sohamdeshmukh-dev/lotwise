@@ -15,9 +15,11 @@ services:
   api:
     build: .
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8765:8000"
     environment:
       DATABASE_URL: postgresql+psycopg://lotwise:local-demo-only@db:5432/lotwise
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-6-astra}
     depends_on:
       db:
         condition: service_healthy

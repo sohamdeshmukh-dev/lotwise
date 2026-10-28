@@ -1,0 +1,90 @@
+{
+  "version": "synthetic-logistic-v1",
+  "feature_names": [
+    "restricted_weight",
+    "mandatory_net_gain_weight",
+    "gain_budget_weight",
+    "optional_loss_capacity_weight",
+    "mandatory_gain_gap_weight",
+    "over_cap_weight",
+    "cash_reserve_gap_weight",
+    "overweight_weight",
+    "cash_weight",
+    "minimum_cash_weight",
+    "position_cap",
+    "transaction_cost_rate"
+  ],
+  "mean": [
+    0.12107860161465339,
+    0.015056278087424201,
+    0.017805981567523735,
+    0.026078131041698604,
+    -0.028827834521798035,
+    0.1419103556475059,
+    0.28190156818518425,
+    0.14623733183859816,
+    0.039999999999999265,
+    0.32190156818518484,
+    0.13960202248047748,
+    0.0004999999999999819
+  ],
+  "scale": [
+    0.08816227615255676,
+    0.017427890991962583,
+    0.010130666639578888,
+    0.011593558476686834,
+    0.02412066745688961,
+    0.09872732286222229,
+    0.18544654625956128,
+    0.028394308739311046,
+    1.0,
+    0.18544654625956128,
+    0.0573857140371998,
+    1.0
+  ],
+  "coefficients": [
+    -1.6170704897120944,
+    1.1373484868547903,
+    -0.3611499988451376,
+    -1.1610080946340096,
+    1.5314870949169452,
+    0.5147038566721713,
+    1.1780066450854114,
+    -0.02560739721085645,
+    -1.1966888789953925e-15,
+    1.1780066450854183,
+    0.12537919204591794,
+    -2.996495271097226e-17
+  ],
+  "intercept": -2.036297774880807,
+  "evaluation": {
+    "training_accounts": 1500,
+    "test_accounts": 500,
+    "training_seed": 2027,
+    "test_seed": 2028,
+    "accuracy": 0.9,
+    "f1": 0.8299319727891157,
+    "roc_auc": 0.9637961664329124,
+    "brier_score": 0.07068306877830442,
+    "majority_baseline_accuracy": 0.69,
+    "confusion_matrix": [
+      [
+        328,
+        17
+      ],
+      [
+        33,
+        122
+      ]
+    ],
+    "test_conflicts": 155,
+    "training_rejected": 0,
+    "test_rejected": 0,
+    "fit_and_evaluation_seconds": 4.605494249961339,
+    "scope": "Synthetic, same-distribution holdout from a separate seed; not production generalization or investment performance"
+  },
+  "environment": {
+    "python": "3.13.3",
+    "scikit_learn": "1.9.1"
+  }
+}

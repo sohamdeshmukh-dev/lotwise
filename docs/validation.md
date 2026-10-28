@@ -4,7 +4,7 @@ Tested October 27, 2026 (America/New_York), Python 3.13.3 on macOS arm64.
 
 | Check | Outcome |
 | --- | --- |
-| Automated tests | 29 passed, 1 PostgreSQL test skipped |
+| Automated tests | 43 passed, 1 PostgreSQL test skipped |
 | Ruff lint and formatting | Passed |
 | Timed synthetic benchmark | 3 × 1,000 valid proposals; no replay violations |
 | Tax-lot coverage | 60,000 input lots per timed batch |
@@ -16,9 +16,12 @@ Tested October 27, 2026 (America/New_York), Python 3.13.3 on macOS arm64.
 | Dashboard response | HTML served successfully through the API test client |
 | Browser visual check | Not performed; browser access declined |
 | PostgreSQL and Docker | Configuration and CI test provided; not locally executed |
+| Local ML | Trained on 1,500 synthetic accounts; 90% accuracy on 500 separate held-out accounts |
+| AI question API | Mocked success, bad citations, unsupported numeric claims, incomplete answers, and provider failure |
+| Live LLM call | Not run; no server API key configured |
 
 The installed Starlette test client emits a deprecation warning for its current
-HTTPX integration. This warning did not affect the 29 passing tests. The exact
+HTTPX integration. This warning did not affect the 43 passing tests. The exact
 environment is pinned in `requirements.lock` for Python 3.13.
 
 ## What the checks establish

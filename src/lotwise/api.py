@@ -11,9 +11,11 @@ from fastapi.responses import FileResponse
 from sqlalchemy.exc import IntegrityError
 
 from lotwise.database import IdempotencyConflict, Repository
-from lotwise.models import Account
+from lotwise.models import Account, Proposal
 from lotwise.optimizer import Rebalancer
+from lotwise.review import InvalidReview, Question, ReviewUnavailable, ask, local_report
 from lotwise.synthetic import generate_accounts, impossible_account
+from lotwise.triage import predict
 
 
 def create_app(database_url: str | None = None) -> FastAPI:
@@ -24,6 +26,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
         )
         app.state.rebalancer = Rebalancer()
         app.state.lock = threading.Lock()
+        app.state.review_client = None
         yield
         app.state.repository.close()
 
@@ -41,6 +44,19 @@ def create_app(database_url: str | None = None) -> FastAPI:
     @app.get("/health")
     def health():
         return {"status": "ok", "mode": "simulation"}
+
+    @app.get("/ai/status")
+    def ai_status():
+        return {
+            "local_ml": True,
+            "llm_configured": bool(os.getenv("OPENAI_API_KEY")),
+            "model": os.getenv("OPENAI_MODEL", "gpt-6-astra"),
+            "data_note": "Local ML stays on this server. AI questions send the question and selected proposal facts to OpenAI.",
+        }
+
+    @app.post("/ai/triage")
+    def triage(account: Account):
+        return predict(account)
 
     @app.get("/demo/account")
     def demo_account(scenario: Literal["balanced", "restricted", "infeasible"] = "restricted"):
@@ -84,6 +100,32 @@ def create_app(database_url: str | None = None) -> FastAPI:
         if app.state.repository.get(proposal_id) is None:
             raise HTTPException(404, "Proposal not found")
         return app.state.repository.audit(proposal_id)
+
+    def review_inputs(proposal_id):
+        repo = app.state.repository
+        payload = repo.get(proposal_id)
+        if payload is None:
+            raise HTTPException(404, "Proposal not found")
+        account = repo.account_for(proposal_id)
+        return account, Proposal.model_validate(
+            {k: v for k, v in payload.items() if k != "proposal_id"}
+        )
+
+    @app.get("/proposals/{proposal_id}/review")
+    def review(proposal_id: str):
+        account, proposal = review_inputs(proposal_id)
+        return local_report(account, proposal)
+
+    @app.post("/proposals/{proposal_id}/ask")
+    def ask_question(proposal_id: str, body: Question):
+        account, proposal = review_inputs(proposal_id)
+        try:
+            answer = ask(account, proposal, body.question, client=app.state.review_client)
+        except ReviewUnavailable as exc:
+            raise HTTPException(503, str(exc)) from exc
+        except InvalidReview as exc:
+            raise HTTPException(502, str(exc)) from exc
+        return app.state.repository.save_review(proposal_id, body.question, answer)
 
     return app
 

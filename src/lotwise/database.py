@@ -79,6 +79,15 @@ class IdempotencyConflict(ValueError):
     pass
 
 
+class ReviewRow(Base):
+    __tablename__ = "ai_reviews"
+    review_id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    proposal_id: Mapped[str] = mapped_column(ForeignKey("proposals.proposal_id"), index=True)
+    question: Mapped[str] = mapped_column(Text)
+    payload: Mapped[dict] = mapped_column(JSON)
+    created_at: Mapped[str] = mapped_column(String(40))
+
+
 class Repository:
     def __init__(self, url="sqlite:///lotwise.db"):
         options = {}
@@ -166,8 +175,47 @@ class Repository:
 
     def audit(self, proposal_id):
         with Session(self.engine) as session:
-            rows = session.scalars(select(AuditRow).where(AuditRow.proposal_id == proposal_id))
+            rows = session.scalars(
+                select(AuditRow)
+                .where(AuditRow.proposal_id == proposal_id)
+                .order_by(AuditRow.created_at, AuditRow.event_id)
+            )
             return [{"created_at": row.created_at, **row.detail} for row in rows]
+
+    def account_for(self, proposal_id):
+        with Session(self.engine) as session:
+            proposal = session.get(ProposalRow, proposal_id)
+            if proposal is None:
+                return None
+            snapshot = session.get(Snapshot, proposal.input_hash)
+            return Account.model_validate(snapshot.input_payload)
+
+    def save_review(self, proposal_id, question, payload):
+        review_id, now = str(uuid.uuid4()), datetime.now(UTC).isoformat()
+        with Session(self.engine) as session, session.begin():
+            session.add(
+                ReviewRow(
+                    review_id=review_id,
+                    proposal_id=proposal_id,
+                    question=question,
+                    payload=payload,
+                    created_at=now,
+                )
+            )
+            session.add(
+                AuditRow(
+                    event_id=str(uuid.uuid4()),
+                    proposal_id=proposal_id,
+                    created_at=now,
+                    detail={
+                        "event": "ai_review",
+                        "review_id": review_id,
+                        "model": payload["model"],
+                        "provider": payload["provider"],
+                    },
+                )
+            )
+        return {"review_id": review_id, **payload}
 
     def close(self):
         self.engine.dispose()

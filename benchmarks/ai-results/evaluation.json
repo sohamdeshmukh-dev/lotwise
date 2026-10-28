@@ -1,0 +1,26 @@
+{
+  "training_accounts": 1500,
+  "test_accounts": 500,
+  "training_seed": 2027,
+  "test_seed": 2028,
+  "accuracy": 0.9,
+  "f1": 0.8299319727891157,
+  "roc_auc": 0.9637961664329124,
+  "brier_score": 0.07068306877830442,
+  "majority_baseline_accuracy": 0.69,
+  "confusion_matrix": [
+    [
+      328,
+      17
+    ],
+    [
+      33,
+      122
+    ]
+  ],
+  "test_conflicts": 155,
+  "training_rejected": 0,
+  "test_rejected": 0,
+  "fit_and_evaluation_seconds": 4.605494249961339,
+  "scope": "Synthetic, same-distribution holdout from a separate seed; not production generalization or investment performance"
+}

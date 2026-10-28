@@ -11,6 +11,10 @@ The project focuses on the engineering between an investment decision and a
 reviewable trade list: validated inputs, constrained optimization, independent
 ledger replay, SQL persistence, idempotent API requests, and actionable exceptions.
 
+The **AI review** panel adds a locally trained conflict classifier and cited
+proposal explanations. Local ML works without an API key. Optional LLM questions
+use selected proposal evidence and require a server-side OpenAI key.
+
 ## Try it locally
 
 Python 3.13 is the tested environment. From this directory:
@@ -20,10 +24,10 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.lock
 pip install --no-deps -e .
-uvicorn lotwise.api:app --host 127.0.0.1 --port 8000
+uvicorn lotwise.api:app --host 127.0.0.1 --port 8765
 ```
 
-Open **http://127.0.0.1:8000** for the review dashboard, or **/docs** for the API.
+Open **http://127.0.0.1:8765** for the review dashboard, or **/docs** for the API.
 The default database is local SQLite; no market-data subscription is required.
 
 The dashboard offers three fictional scenarios: an unrestricted account, an
@@ -45,7 +49,7 @@ docker compose up --build
 ```
 
 Compose starts PostgreSQL 17 and the API, waits for database readiness, and exposes
-the dashboard on localhost:8000. The credentials in Compose are local demo values.
+the dashboard on localhost:8765. The credentials in Compose are local demo values.
 The PostgreSQL integration test is included in CI. Local measurements in this
 repository used SQLite; Docker and PostgreSQL were not available for local verification.
 
@@ -126,12 +130,28 @@ flowchart LR
 | GET | `/proposals/{id}/audit` | Inspect its persisted audit event |
 
 ```bash
-curl -s 'http://127.0.0.1:8000/demo/account' > /tmp/account.json
-curl -s -X POST http://127.0.0.1:8000/proposals \
+curl -s 'http://127.0.0.1:8765/demo/account' > /tmp/account.json
+curl -s -X POST http://127.0.0.1:8765/proposals \
   -H 'Content-Type: application/json' \
   -H 'Idempotency-Key: demo-001' \
   --data-binary @/tmp/account.json
 ```
+
+## AI review
+
+The local conflict classifier achieved **90% accuracy on 500 held-out synthetic
+accounts**, versus a 69% majority-class baseline. It was trained on 1,500 separate
+accounts with labels from actual optimizer outcomes. Signed feature contributions
+show the main model signals. Every account is still solved and independently
+checked, regardless of the prediction.
+
+Generate a proposal to see its local evidence report. To enable optional AI
+questions, set `OPENAI_API_KEY` in the server environment and restart it.
+`OPENAI_MODEL` selects the model (default `gpt-6-astra`). The UI identifies when
+selected proposal facts are sent to OpenAI, and valid answers are saved in the
+audit trail. No live LLM request was tested without a configured API key.
+
+See [AI design, evaluation, setup, and limitations](docs/ai.md) for details.
 
 ## Verification
 
@@ -147,6 +167,11 @@ infeasibility, deterministic solves, API retrieval, concurrent duplicate request
 idempotency conflicts, and transaction rollback. Seeded tests replay proposals
 across three additional fixture configurations. CI also provisions PostgreSQL and
 executes the database integration test. See [the test report](docs/validation.md).
+
+AI tests cover held-out metrics, immutable proposal inputs, evidence citations,
+numeric-claim rejection, provider failures, optional-key behavior, and review audit
+events. The current local suite has **43 passing tests**, with the PostgreSQL
+integration test skipped until an isolated database is provided.
 
 ## Modeling boundaries
 

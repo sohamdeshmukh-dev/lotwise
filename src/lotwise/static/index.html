@@ -13,11 +13,13 @@ main{max-width:1300px;margin:auto;padding:40px 5%}h1{font-size:clamp(32px,4vw,54
 .small{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px}.stat span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.stat strong{display:block;font-size:28px;letter-spacing:-1px;margin-top:8px}
 .status{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px}.tag{padding:4px 10px;background:#e7f3e9;color:var(--green);font-size:12px;border-radius:20px}.tag.bad{background:#ffe8dc;color:#983b21}.table-wrap{overflow:auto;max-height:430px}table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}th{color:var(--muted);font-weight:500;position:sticky;top:0;background:#fff}th,td{padding:10px 8px;border-bottom:1px solid #edf0eb}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}.sell{color:#a35331}.buy{color:var(--green)}.explain{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}#exceptions{color:#983b21}details{margin-top:20px;font-size:12px}pre{overflow:auto;background:#f4f6f2;padding:14px;max-height:300px}a{color:var(--green)}footer{padding:30px 5%;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}.barrow{display:grid;grid-template-columns:75px 1fr 55px;gap:10px;align-items:center;margin:10px 0;font-size:12px}.track{background:#eaf0e8;height:12px;border-radius:3px;overflow:hidden}.bar{background:var(--green);height:100%}.bar.before{background:#a9bcb4}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr 1fr}.stat{padding:12px}.stat strong{font-size:22px}h1{letter-spacing:-1px}}
+.ai-panel{margin-top:20px}.ai-question{display:flex;gap:10px;margin-top:18px}.ai-question input{flex:1;min-width:0;padding:12px;border:1px solid var(--line);border-radius:6px;font:inherit}.ai-question button{background:var(--green);color:#fff;border:0;border-radius:6px;padding:10px 16px;font:inherit;cursor:pointer}.ai-question button:disabled{opacity:.5;cursor:default}.finding{border-left:3px solid var(--lime);padding:8px 14px;margin:16px 0}.finding p{margin:0 0 8px;color:var(--ink)}.citations{display:flex;flex-wrap:wrap;gap:6px}.citation{background:var(--paper);padding:4px 8px;border-radius:4px;font-size:11px}.signal{font-size:12px;margin:6px 0;color:var(--muted)}#file-help{background:var(--lime);padding:16px;border-radius:8px;margin-bottom:24px}#file-help[hidden]{display:none}
 </style>
 </head>
 <body>
 <header><div class="logo">◈ LotWise</div><span class="badge">Portfolio implementation lab</span></header>
 <main>
+<div id="file-help" hidden>This dashboard needs its local server. <a href="http://127.0.0.1:8765">Open the running LotWise app →</a></div>
 <div class="eyebrow">One model. Individual constraints.</div>
 <h1>A considered trade<br>for every account.</h1>
 <p>Explore how tax lots, investment restrictions, and cash needs shape a portfolio rebalance. Generate a proposal, inspect every sale, and follow the audit trail.</p>
@@ -40,24 +42,160 @@ main{max-width:1300px;margin:auto;padding:40px 5%}h1{font-size:clamp(32px,4vw,54
 <div class="explain"><strong>Distance from model</strong><p class="small">Root mean square allocation difference, in basis points. Stock exclusions may require more distance from the original model.</p><div class="barrow"><span>Before</span><div class="track"><div class="bar before" id="beforebar"></div></div><span id="before">—</span></div><div class="barrow"><span>After</span><div class="track"><div class="bar" id="afterbar"></div></div><span id="after">—</span></div></div>
 <details><summary>Proposal details & audit trail</summary><pre id="audit">Generate a proposal to inspect its persisted audit record.</pre></details>
 </div>
+<div class="panel ai-panel">
+<div class="status"><h2 style="margin:0">AI review</h2><span class="tag">Local ML</span></div>
+<strong id="triage-label">Checking account rules…</strong>
+<p id="triage-detail" class="small" aria-live="polite">A trained model flags potential constraint conflicts before the optimizer runs.</p>
+<div id="signals"></div>
+<div class="explain"><strong id="review-label">Proposal evidence</strong><div id="findings"><p class="small">Generate a proposal to see its evidence report.</p></div></div>
+<form class="ai-question" id="ask-form"><input id="question" aria-label="Ask about this proposal" placeholder="Why were these tax lots selected?" maxlength="1500" minlength="3" required disabled><button id="ask" type="submit" disabled>Ask AI</button></form>
+<p id="ai-note" class="small">Local analysis needs no API key. Checking optional AI question support…</p>
+<p class="small">Review refers to the last generated proposal. ML warnings are advisory; every account still goes through optimization and ledger checks.</p>
+</div>
 </section></div>
 </main>
 <footer>LotWise · Engineering simulation · No historical performance or tax savings claims</footer>
 <script>
-const el=id=>document.getElementById(id), money=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(x);
-let account;
-async function read(response){const body=await response.json();if(!response.ok)throw new Error(typeof body.detail==='string'?body.detail:JSON.stringify(body.detail));return body}
-async function load(){el('run').disabled=true;try{account=await read(await fetch('/demo/account?scenario='+el('scenario').value));el('budget').value=Math.round(account.realized_gain_budget);el('cap').value=account.max_position_weight*100;el('reserve').value=account.min_cash_weight*100;el('message').textContent=account.account_id+' · '+account.lots.length+' tax lots'+(account.restricted_symbols.length?' · Excludes '+account.restricted_symbols.join(', '):'');el('nav').textContent=money(account.cash+account.lots.reduce((sum,l)=>sum+l.shares*account.securities.find(s=>s.symbol===l.symbol).price,0));el('status').textContent='Ready';el('trades').replaceChildren();el('exceptions').textContent='';for(const id of ['gains','fees','before','after'])el(id).textContent='—';for(const id of ['beforebar','afterbar'])el(id).style.width='0';el('audit').textContent='Generate a proposal to inspect its persisted audit record.'}catch(e){el('message').textContent=e.message}finally{el('run').disabled=false}}
-el('scenario').addEventListener('change',load);
-el('run').addEventListener('click',async()=>{el('run').disabled=true;el('status').textContent='Solving…';try{
-const input=structuredClone(account);input.realized_gain_budget=Number(el('budget').value);input.max_position_weight=Number(el('cap').value)/100;input.min_cash_weight=Number(el('reserve').value)/100;
-const p=await read(await fetch('/proposals',{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':crypto.randomUUID()},body:JSON.stringify(input)}));
-el('status').textContent=p.status==='optimal'?'Validated':p.status;el('status').className='tag'+(p.status==='optimal'?'':' bad');el('exceptions').textContent=p.exceptions.join(' ');el('trades').replaceChildren();
-for(const t of p.trades){const row=document.createElement('tr');for(const [i,text] of [t.symbol,t.side,t.lot_id||'New purchase',t.shares.toFixed(4),t.side==='SELL'?money(t.realized_gain):'—'].entries()){const cell=document.createElement('td');cell.textContent=text;if(i>=3)cell.className='num';if(i===1)cell.className=t.side.toLowerCase();row.append(cell)}row.title=t.reason;el('trades').append(row)}
-if(!p.trades.length){const row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=5;cell.textContent=p.status==='optimal'?'No trades required.':'No actionable trades released.';row.append(cell);el('trades').append(row)}
-const m=p.metrics;el('gains').textContent=m.realized_gain===undefined?'—':money(m.realized_gain);el('fees').textContent=m.transaction_cost===undefined?'—':money(m.transaction_cost);
-const scale=Math.max(m.initial_weight_rmse_bps||0,m.weight_rmse_bps||0,1);for(const [prefix,value] of [['before',m.initial_weight_rmse_bps],['after',m.weight_rmse_bps]]){el(prefix).textContent=value===undefined?'—':value.toFixed(1);el(prefix+'bar').style.width=((value||0)/scale*100)+'%'}
-const audit=await read(await fetch('/proposals/'+p.proposal_id+'/audit'));el('audit').textContent=JSON.stringify({proposal_id:p.proposal_id,metrics:m,events:audit},null,2);
-}catch(e){el('status').textContent='Input error';el('exceptions').textContent=e.message}finally{el('run').disabled=false}});
-load();
+const el = id => document.getElementById(id);
+const money = x => new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', maximumFractionDigits:0}).format(x);
+let account, currentProposal = null, llmConfigured = false, busy = false;
+const featureLabels = {
+  restricted_weight:'Excluded holdings', mandatory_net_gain_weight:'Gains from required exits',
+  gain_budget_weight:'Gain budget', optional_loss_capacity_weight:'Available loss lots',
+  mandatory_gain_gap_weight:'Required gains relative to budget and loss lots',
+  over_cap_weight:'Holdings above position limits', cash_reserve_gap_weight:'Additional cash needed',
+  overweight_weight:'Overweight holdings', cash_weight:'Starting cash',
+  minimum_cash_weight:'Required cash reserve', position_cap:'Position limit', transaction_cost_rate:'Trading cost'
+};
+async function read(response) {
+  const body = await response.json();
+  if (!response.ok) throw new Error(typeof body.detail === 'string' ? body.detail : JSON.stringify(body.detail));
+  return body;
+}
+function setBusy(value) {
+  busy = value;
+  for (const id of ['run','scenario','budget','cap','reserve']) el(id).disabled = value;
+  el('question').disabled = value || !llmConfigured || !currentProposal;
+  el('ask').disabled = el('question').disabled;
+}
+function renderTriage(result) {
+  el('triage-label').textContent = result.label;
+  el('triage-detail').textContent = `Model conflict score: ${(result.conflict_score * 100).toFixed(1)}%. Holdout accuracy: ${(result.evaluation.accuracy * 100).toFixed(0)}% on ${result.evaluation.test_accounts} synthetic accounts. ` + (result.outside_training_shape ? 'This account has a different size from the training fixtures. ' : '') + 'This score is advisory.';
+  el('signals').replaceChildren();
+  for (const driver of result.drivers) {
+    const line = document.createElement('div'); line.className = 'signal';
+    line.textContent = `${featureLabels[driver.feature] || driver.feature} ${driver.direction} the score relative to the training average.`;
+    el('signals').append(line);
+  }
+}
+function renderReport(report) {
+  el('review-label').textContent = report.label;
+  el('findings').replaceChildren();
+  const facts = new Map(report.evidence.map(f => [f.id, f]));
+  for (const finding of report.findings) {
+    const item = document.createElement('div'); item.className = 'finding';
+    const text = document.createElement('p'); text.textContent = finding.explanation;
+    const citations = document.createElement('div'); citations.className = 'citations';
+    for (const id of finding.evidence_ids) {
+      const fact = facts.get(id); if (!fact) continue;
+      const citation = document.createElement('span'); citation.className = 'citation';
+      citation.textContent = `${fact.label}: ${fact.value}`; citations.append(citation);
+    }
+    item.append(text, citations); el('findings').append(item);
+  }
+  const limits = document.createElement('p'); limits.className = 'small';
+  limits.textContent = report.limitations.join(' '); el('findings').append(limits);
+  if (report.triage) renderTriage(report.triage);
+}
+async function load() {
+  currentProposal = null; setBusy(true);
+  try {
+    account = await read(await fetch('/demo/account?scenario=' + el('scenario').value));
+    el('budget').value = Math.round(account.realized_gain_budget);
+    el('cap').value = account.max_position_weight * 100;
+    el('reserve').value = account.min_cash_weight * 100;
+    el('message').textContent = account.account_id + ' · ' + account.lots.length + ' tax lots' + (account.restricted_symbols.length ? ' · Excludes ' + account.restricted_symbols.join(', ') : '');
+    el('nav').textContent = money(account.cash + account.lots.reduce((sum,l) => sum + l.shares * account.securities.find(s => s.symbol === l.symbol).price, 0));
+    el('status').textContent = 'Ready'; el('status').className = 'tag';
+    el('trades').replaceChildren(); el('exceptions').textContent = '';
+    for (const id of ['gains','fees','before','after']) el(id).textContent = '—';
+    for (const id of ['beforebar','afterbar']) el(id).style.width = '0';
+    el('audit').textContent = 'Generate a proposal to inspect its persisted audit record.';
+    el('findings').textContent = 'Generate a proposal to see its evidence report.';
+    renderTriage(await read(await fetch('/ai/triage', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(account)})));
+  } catch(e) { el('message').textContent = e.message; }
+  finally { setBusy(false); }
+}
+el('scenario').addEventListener('change', load);
+for (const id of ['budget','cap','reserve']) el(id).addEventListener('input', () => {
+  currentProposal = null; setBusy(false); el('status').textContent = 'Rules changed';
+  el('findings').textContent = 'Generate a new proposal to review the changed rules.';
+  el('triage-label').textContent = 'Rules changed';
+  el('triage-detail').textContent = 'Generate a proposal to update the model score.';
+  el('signals').replaceChildren();
+});
+el('run').addEventListener('click', async () => {
+  currentProposal = null; setBusy(true); el('status').textContent = 'Solving…';
+  try {
+    const input = structuredClone(account);
+    input.realized_gain_budget = Number(el('budget').value);
+    input.max_position_weight = Number(el('cap').value) / 100;
+    input.min_cash_weight = Number(el('reserve').value) / 100;
+    renderTriage(await read(await fetch('/ai/triage', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(input)})));
+    const p = await read(await fetch('/proposals', {method:'POST', headers:{'Content-Type':'application/json','Idempotency-Key':crypto.randomUUID()}, body:JSON.stringify(input)}));
+    currentProposal = p.proposal_id;
+    el('status').textContent = p.status === 'optimal' ? 'Validated' : p.status;
+    el('status').className = 'tag' + (p.status === 'optimal' ? '' : ' bad');
+    el('exceptions').textContent = p.exceptions.join(' '); el('trades').replaceChildren();
+    for (const t of p.trades) {
+      const row = document.createElement('tr');
+      for (const [i,text] of [t.symbol,t.side,t.lot_id || 'New purchase',t.shares.toFixed(4),t.side === 'SELL' ? money(t.realized_gain) : '—'].entries()) {
+        const cell = document.createElement('td'); cell.textContent = text;
+        if (i >= 3) cell.className = 'num'; if (i === 1) cell.className = t.side.toLowerCase(); row.append(cell);
+      }
+      row.title = t.reason; el('trades').append(row);
+    }
+    if (!p.trades.length) {
+      const row = document.createElement('tr'), cell = document.createElement('td'); cell.colSpan = 5;
+      cell.textContent = p.status === 'optimal' ? 'No trades required.' : 'No actionable trades released.';
+      row.append(cell); el('trades').append(row);
+    }
+    const m = p.metrics;
+    el('gains').textContent = m.realized_gain === undefined ? '—' : money(m.realized_gain);
+    el('fees').textContent = m.transaction_cost === undefined ? '—' : money(m.transaction_cost);
+    const scale = Math.max(m.initial_weight_rmse_bps || 0, m.weight_rmse_bps || 0, 1);
+    for (const [prefix,value] of [['before',m.initial_weight_rmse_bps],['after',m.weight_rmse_bps]]) {
+      el(prefix).textContent = value === undefined ? '—' : value.toFixed(1);
+      el(prefix + 'bar').style.width = ((value || 0) / scale * 100) + '%';
+    }
+    const audit = await read(await fetch('/proposals/' + currentProposal + '/audit'));
+    el('audit').textContent = JSON.stringify({proposal_id:currentProposal, metrics:m, events:audit}, null, 2);
+    renderReport(await read(await fetch('/proposals/' + currentProposal + '/review')));
+  } catch(e) { el('status').textContent = 'Review error'; el('exceptions').textContent = e.message; }
+  finally { setBusy(false); }
+});
+el('ask-form').addEventListener('submit', async event => {
+  event.preventDefault(); if (!currentProposal || !llmConfigured || busy) return;
+  const id = currentProposal; setBusy(true); el('ai-note').textContent = 'Preparing an evidence-backed AI interpretation…';
+  try {
+    const report = await read(await fetch('/proposals/' + id + '/ask', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({question:el('question').value})}));
+    renderReport(report); el('ai-note').textContent = 'AI review saved to the proposal audit trail. Verify the cited evidence.';
+    const audit = await read(await fetch('/proposals/' + id + '/audit'));
+    el('audit').textContent = JSON.stringify({proposal_id:id,events:audit},null,2);
+  } catch(e) { el('ai-note').textContent = e.message; }
+  finally { setBusy(false); }
+});
+async function start() {
+  if (location.protocol === 'file:') {
+    el('file-help').hidden = false; setBusy(true);
+    el('message').textContent = 'Use the local server link above to run this application.';
+    el('triage-label').textContent = 'Open the running app to use AI review'; return;
+  }
+  try {
+    const status = await read(await fetch('/ai/status')); llmConfigured = status.llm_configured;
+    el('ai-note').textContent = llmConfigured ? status.data_note : 'Local ML and evidence reports are ready. Set OPENAI_API_KEY on the server to enable AI questions.';
+  } catch(e) { el('ai-note').textContent = e.message; }
+  await load();
+}
+start();
 </script></body></html>
